@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Spin, Button } from "antd";
+import { Progress } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
 
 function App() {
-  const [spinning, setSpinning] = useState(false);
-
   return (
     <div className="App">
       <header className="App-header">
-        <Spin spinning={spinning} />
-        <Button onClick={() => setSpinning(!spinning)}>Toggle Spinning</Button>
+        <Progress percent={50} />
+        <Progress percent={50} status="active" />
+        <Progress percent={50} type="circle" status="success" />
+        <Progress percent={50} status="exception" type="dashboard" />
+        <Progress
+          percent={50}
+          type="circle"
+          trailColor="red"
+          strokeColor="orange"
+          status="active"
+        />
       </header>
     </div>
   );
