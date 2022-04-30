@@ -1,17 +1,32 @@
 import React, { useState, useRef, RefObject } from "react";
-import { Input, Button, InputRef } from "antd";
+import { Select } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
 
 function App() {
-  const onFocusInput = () => {};
+  const favoriteFruits = ["Bananna", "Coconut", "Orange", "Water Melon"];
+  const { Option } = Select;
+
+  const onChange = (e: HTMLSelectElement) => {
+    console.log(e);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <Input name="antInput" placeholder="name" />
-        <Button onClick={onFocusInput}>Focus input</Button>
+        <Select
+          mode="multiple"
+          maxTagCount={2}
+          placeholder="Select your favorite fruit"
+          onChange={onChange}
+        >
+          {favoriteFruits.map((favoriteFruit, index) => (
+            <Option value={favoriteFruit} key={index}>
+              {favoriteFruit}
+            </Option>
+          ))}
+        </Select>
       </header>
     </div>
   );
