@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { DatePicker } from "antd";
+import { Spin, Button } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
 
 function App() {
-  const onMonthChange = (e: moment.Moment | null) => {
-    console.log(e?.format("L"));
-  };
+  const [spinning, setSpinning] = useState(false);
 
   return (
     <div className="App">
       <header className="App-header">
-        <DatePicker picker="month" format="MM/YYYY" onChange={onMonthChange} />
+        <Spin spinning={spinning} />
+        <Button onClick={() => setSpinning(!spinning)}>Toggle Spinning</Button>
       </header>
     </div>
   );
