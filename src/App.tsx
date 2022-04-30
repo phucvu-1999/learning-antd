@@ -1,32 +1,32 @@
-import React, { useState, useRef, RefObject } from "react";
-import { Select } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
 
 function App() {
-  const favoriteFruits = ["Bananna", "Coconut", "Orange", "Water Melon"];
-  const { Option } = Select;
+  const [form] = Form.useForm();
 
-  const onChange = (e: HTMLSelectElement) => {
-    console.log(e);
+  const onFinish = () => {
+    console.log(form.getFieldsValue());
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <Select
-          mode="multiple"
-          maxTagCount={2}
-          placeholder="Select your favorite fruit"
-          onChange={onChange}
-        >
-          {favoriteFruits.map((favoriteFruit, index) => (
-            <Option value={favoriteFruit} key={index}>
-              {favoriteFruit}
-            </Option>
-          ))}
-        </Select>
+        <Form form={form} layout="vertical" onFinish={onFinish} id="loginForm">
+          <Form.Item name="username" label="Username">
+            <Input placeholder="Please enter your username" />
+          </Form.Item>
+
+          <Form.Item name="password" label="Password">
+            <Input.Password placeholder="Please enter your password" />
+          </Form.Item>
+
+          <Form.Item name="submitBtn" label="Submit">
+            <Button htmlType="submit" form="loginForm"></Button>
+          </Form.Item>
+        </Form>
       </header>
     </div>
   );
