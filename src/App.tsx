@@ -1,33 +1,17 @@
-import React, { useState } from "react";
-import { Button } from "antd";
-import { PoweroffOutlined } from "@ant-design/icons";
+import React, { useState, useRef, RefObject } from "react";
+import { Input, Button, InputRef } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
 
 function App() {
-  const [loading, setLoading] = useState(false);
-
-  const onBtnClick = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
+  const onFocusInput = () => {};
 
   return (
     <div className="App">
       <header className="App-header">
-        <Button
-          type="primary"
-          icon={<PoweroffOutlined />}
-          block
-          onClick={onBtnClick}
-          loading={loading}
-        >
-          Add new
-        </Button>
+        <Input name="antInput" placeholder="name" />
+        <Button onClick={onFocusInput}>Focus input</Button>
       </header>
     </div>
   );
