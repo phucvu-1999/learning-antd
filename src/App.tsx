@@ -68,26 +68,9 @@ function App() {
     const randomNumber = Math.random() * 1000;
   };
 
-  // The same
-  // console.log("comparision: ", moment("2022/04/30").isSame("2022/04/30"));
-
-  // Before
-  // console.log(
-  //   moment("2022/04/30 12:23:25").isBefore("2022/04/30 12:30:30", "years")
-  // );
-
-  // The same or after
-  // console.log(moment("2022/04/30").isSameOrAfter("2020/04/30"));
-
-  // Is between
-  const m1 = moment("2020/04/28");
-  const m2 = moment("2020/04/29");
-  const m3 = moment("2020/04/30");
-
-  // console.log(m2.isBetween(m1, m3));
-
-  // Check if certain object is a moment object;
-  console.log(moment.isMoment(m1));
+  let duration = moment.duration(5, "days");
+  duration = moment.duration(10, "M");
+  console.log(duration.humanize());
 
   return (
     <div className="App">
