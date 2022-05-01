@@ -1,76 +1,93 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { SorterResult } from "antd/lib/table/interface";
-import { TablePaginationConfig } from "antd";
 
+import { Student } from "./models/user";
 import "antd/dist/antd.css";
-import { User } from "./models/user";
-import { Filter, Pagination, Sorter } from "./models/table";
 import "./App.css";
 
 function App() {
-  const [dataSource, setDataSource] = useState<User[]>([]);
-
-  useEffect(() => {
-    getDataSource();
-  }, []);
-
-  const getDataSource = async () => {
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos");
-    const data: User[] = await res.json();
-    setDataSource(data);
-  };
-
-  const columns: ColumnsType<User> = [
+  const columns: ColumnsType<Student> = [
     {
-      title: "ID",
+      title: "Student ID",
       dataIndex: "id",
-      width: "40%",
-      key: "1",
-      sorter: (a, b) => a.id - b.id,
     },
     {
-      title: "User ID",
-      dataIndex: "userId",
-      width: "30%",
-      key: "2",
-      sorter: (a, b) => a.userId - b.userId,
+      title: "Student Name",
+      dataIndex: "name",
     },
     {
-      title: "Status",
-      dataIndex: "completed",
-      width: "30%",
-      key: "3",
-      filters: [
-        { text: "Complete", value: true },
-        { text: "In Progress", value: false },
-      ],
-      onFilter: (value, record) => {
-        return record.completed === value;
-      },
+      title: "Student Grade",
+      dataIndex: "grade",
       render: (value, record) => {
-        return <span>{record.completed ? "Completed" : "In Progress"}</span>;
+        const tagColor = record.grade.includes("A")
+          ? "Green"
+          : record.grade.includes("B")
+          ? "Blue"
+          : "Red";
+
+        return (
+          <Tag color={tagColor} key={record.grade}>
+            {record.grade}
+          </Tag>
+        );
       },
     },
   ];
 
-  const onTableChange = (
-    _pagination: TablePaginationConfig,
-    _filter: any,
-    _sorter: SorterResult<User> | SorterResult<User>[]
-  ) => {
-    console.log({ _pagination, _filter, _sorter });
-  };
+  const dataSource = [
+    {
+      key: "1",
+      id: 1,
+      name: "Student 1",
+      grade: "A+",
+    },
+    {
+      key: "2",
+      id: 2,
+      name: "Student 2",
+      grade: "A",
+    },
+    {
+      key: "3",
+      id: 3,
+      name: "Student 3",
+      grade: "B",
+    },
+    {
+      key: "4",
+      id: 4,
+      name: "Student 4",
+      grade: "C",
+    },
+    {
+      key: "5",
+      id: 5,
+      name: "Student 5",
+      grade: "A",
+    },
+  ];
 
   return (
     <div className="App">
       <header className="App-header">
         <Table
-          onChange={onTableChange}
-          rowKey="id"
-          dataSource={dataSource}
           columns={columns}
+          dataSource={dataSource}
+          rowSelection={{
+            type: "checkbox",
+            onSelect: (record, selected, selectedRow) => {
+              console.log({ record, selected, selectedRow });
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.grade === "C",
+            }),
+            selections: [
+              Table.SELECTION_ALL,
+              Table.SELECTION_NONE,
+              Table.SELECTION_INVERT,
+            ],
+          }}
         />
       </header>
     </div>

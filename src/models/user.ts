@@ -4,3 +4,10 @@ export interface User {
   title: string;
   completed: boolean;
 }
+
+export interface Student {
+  name: string;
+  id: number;
+  grade: string;
+  key: string;
+}
